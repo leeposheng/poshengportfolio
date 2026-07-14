@@ -127,6 +127,7 @@ main {
     line-height: 1.5;
     margin: 0;
 }
+
 /* 強調首張作品卡片 */
 .featured-card {
     grid-column: 1 / -1; /* 跨滿整行 */
