@@ -1,4 +1,3 @@
-/* 全域設定與色彩校正 */
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -8,134 +7,185 @@ body, html {
     padding: 0;
     width: 100%;
     min-height: 100vh;
-    background-color: #0a0a0c; /* 帶點冷調的極深灰黑，更顯質感 */
-    color: #f1f1f5;
+    background-color: #070709;
+    color: #e2e2ec;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 
-/* 頂部導覽列 (Minimal Header) */
+/* 背景格線裝飾，模擬工業製圖底板 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+    pointer-events: none;
+}
+
 header {
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 0; left: 0;
     width: 100%;
     padding: 1.5rem 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 10;
-    background: linear-gradient(to bottom, rgba(10,10,12,0.8), rgba(10,10,12,0));
-    backdrop-filter: blur(5px);
+    z-index: 100;
+    background: rgba(7, 7, 9, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .logo {
-    font-weight: 700;
-    letter-spacing: 2px;
-    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    font-size: 1rem;
     color: #fff;
 }
 
 .nav-links a {
-    color: #a1a1b5;
+    color: #8c8c9e;
     text-decoration: none;
-    margin-left: 2rem;
-    font-size: 0.9rem;
+    margin-left: 2.5rem;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
     transition: color 0.2s ease;
 }
 
 .nav-links a:hover {
-    color: #fff;
+    color: #00e5ff;
 }
 
-/* 主視覺區塊 (Hero Section) */
 main {
-    padding: 10vh 5% 5vh 5%;
+    position: relative;
+    z-index: 1;
+    padding: 14vh 5% 10vh 5%;
     max-width: 1400px;
     margin: 0 auto;
 }
 
 .hero {
-    padding: 5rem 0;
+    padding: 4rem 0 5rem 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .tag {
     display: inline-block;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.75rem;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    background-color: rgba(255, 255, 255, 0.06);
+    letter-spacing: 3px;
+    background-color: rgba(0, 229, 255, 0.08);
     color: #00e5ff;
-    border-radius: 4px;
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-radius: 2px;
     margin-bottom: 1.5rem;
 }
 
 .hero h1 {
     font-size: clamp(2.5rem, 5vw, 4.5rem);
-    font-weight: 800;
-    line-height: 1.1;
+    font-weight: 900;
+    line-height: 1.05;
     margin: 0 0 1.5rem 0;
-    letter-spacing: -1px;
+    letter-spacing: -1.5px;
+    color: #fff;
 }
 
 .hero p {
-    font-size: clamp(1rem, 1.5vw, 1.25rem);
-    color: #9494ad;
-    max-width: 600px;
-    line-height: 1.6;
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    color: #8c8c9e;
+    max-width: 650px;
+    line-height: 1.7;
     margin: 0;
 }
 
-/* 作品集 Grid 預備區塊 */
 .section-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin: 4rem 0 2rem 0;
-    letter-spacing: 1px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 5rem 0 2rem 0;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+.section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    margin-left: 1.5rem;
 }
 
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    padding-bottom: 5rem;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
 }
 
+/* 卡片基礎與精密框線 */
 .card {
-    background-color: #121216;
+    grid-column: span 6;
+    background-color: #0f0f14;
     border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 8px;
-    padding: 2.5rem;
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    border-radius: 4px;
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* 工業風角落刻度標記 */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 8px; height: 8px;
+    border-top: 2px solid rgba(255, 255, 255, 0.15);
+    border-right: 2px solid rgba(255, 255, 255, 0.15);
 }
 
 .card:hover {
     transform: translateY(-4px);
-    border-color: rgba(0, 229, 255, 0.3);
+    border-color: rgba(0, 229, 255, 0.4);
+    background-color: #13131c;
 }
 
-.card h3 {
-    margin: 0 0 0.75rem 0;
-    font-size: 1.25rem;
-}
-
-.card p {
-    color: #8f8fa8;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin: 0;
-}
-
-/* 強調首張作品卡片 */
+/* 主打特色大卡片 (MASK 滿版橫幅) */
 .featured-card {
-    grid-column: 1 / -1; /* 跨滿整行 */
-    background: linear-gradient(135deg, #121216 0%, #1a1a24 100%);
-    border-color: rgba(0, 229, 255, 0.2);
+    grid-column: span 12;
+    background: linear-gradient(135deg, #0f0f14 0%, #151522 100%);
+    border-color: rgba(0, 229, 255, 0.25);
 }
 
 .featured-card h3 {
-    font-size: 1.75rem;
+    font-size: 2rem;
     color: #00e5ff;
+}
+
+.card h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #fff;
+}
+
+.card p {
+    color: #8c8c9e;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* 響應式手機調整 */
+@media (max-width: 768px) {
+    .card, .featured-card {
+        grid-column: span 12;
+    }
 }
