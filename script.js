@@ -130,7 +130,7 @@ function openModal(projectId) {
     
     // 如果有額外圖片，添加到內容中
     if (data.images && data.images.length > 0) {
-        contentHTML += '<div class="additional-images">';
+        contentHTML += `<div class="additional-images additional-images-${projectId}">`;
         data.images.forEach((imgSrc) => {
             contentHTML += `<img src="${imgSrc}" alt="${data.title} detail">`;
         });

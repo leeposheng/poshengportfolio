@@ -356,7 +356,14 @@ main {
     object-fit: cover;
 }
 
-.additional-images img:last-child {
+/* MASK - 最後一張圖片放大全寬 */
+.additional-images-mask img:last-child {
     grid-column: span 2;
     max-width: 100%;
+}
+
+/* L1 RACING 和 Gain Support Device - 等大 2×2 網格 */
+.additional-images-l1 img,
+.additional-images-device img {
+    /* 保持等大，不放大 */
 }
