@@ -144,6 +144,12 @@ main {
 }
 
 .card {
+    /* 將超連結卡片的預設樣式歸零 */
+a.card {
+    text-decoration: none; /* 去除底線 */
+    display: block; /* 讓連結區塊像一般 div 一樣填滿空間 */
+    color: inherit; /* 繼承原本的字體顏色 */
+}
     grid-column: span 6;
     background-color: #0f0f14;
     border: 1px solid rgba(255, 255, 255, 0.06);
