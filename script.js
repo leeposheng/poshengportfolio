@@ -63,8 +63,8 @@ const projectData = {
         images: [
             'jpg/Lee_Po-Sheng Portfolio_page-0024.jpg',
             'jpg/Lee_Po-Sheng Portfolio_page-0025.jpg',
-            'jpg/Lee_Po-Sheng Portfolio_page-0012.jpg',
-            'jpg/Lee_Po-Sheng Portfolio_page-0016.jpg'
+            'jpg/Lee_Po-Sheng Portfolio_page-0026.jpg',
+            'jpg/Lee_Po-Sheng Portfolio_page-0027.jpg'
         ]
     },
     'mask': {
