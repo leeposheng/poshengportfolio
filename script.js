@@ -61,8 +61,8 @@ const projectData = {
         img: 'jpg/Lee_Po-Sheng Portfolio_page-0023.jpg',
         desc: '這是一個探討空間動線與秩序美學的策展計畫。利用深邃的視覺與浮動元素，創造出脫離日常引力的展演空間。這裡未來可以補上更多關於你如何建構這些空間的 3D 渲染圖與理念。',
         images: [
-            'jpg/Lee_Po-Sheng Portfolio_page-0021.jpg',
-            'jpg/Lee_Po-Sheng Portfolio_page-0022.jpg'
+            'jpg/Lee_Po-Sheng Portfolio_page-0024.jpg',
+            'jpg/Lee_Po-Sheng Portfolio_page-0025.jpg'
         ]
     },
     'mask': {
