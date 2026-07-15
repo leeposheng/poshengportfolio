@@ -165,10 +165,13 @@ main {
     z-index: 3;
 }
 
-/* 圖片容器與濾鏡 */
+/* =========================================
+   卡片圖片容器與濾鏡 (優化圖文比例)
+   ========================================= */
 .card-img-wrapper {
     width: 100%;
-    height: 280px;
+    aspect-ratio: 16 / 10; /* 一般卡片採用 16:10 黃金比例，增加圖片高度 */
+    height: auto;
     overflow: hidden;
     position: relative;
     background-color: #000;
@@ -179,7 +182,7 @@ main {
     height: 100%;
     object-fit: cover;
     opacity: 0.85;
-    transition: transform 0.5s ease, opacity 0.3s ease;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
 }
 
 .card:hover .card-img-wrapper img {
@@ -187,8 +190,41 @@ main {
     opacity: 1;
 }
 
+/* 大主打卡片專屬比例 */
+.featured-card .card-img-wrapper {
+    aspect-ratio: 21 / 9; /* 電影級寬螢幕比例，讓浮生未央更具震撼力 */
+    height: auto;
+}
+
+/* =========================================
+   卡片文字區塊 (縮小黑色方塊面積)
+   ========================================= */
 .card-content {
-    padding: 2.5rem;
+    padding: 1.5rem 2rem; /* 將原本的 2.5rem 縮小，上下收緊，左右保留呼吸感 */
+}
+
+.featured-card h3 {
+    font-size: 1.8rem;
+    color: #00e5ff;
+}
+
+.card h3 {
+    margin: 0 0 0.5rem 0; /* 縮小標題與內文的距離 */
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #fff;
+}
+
+.card p {
+    color: #8c8c9e;
+    font-size: 0.95rem;
+    line-height: 1.5; /* 稍微收緊文字行高 */
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 限制內文最多顯示兩行，超過變成省略號，確保黑色方塊不會被文字撐太高 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .card:hover {
@@ -201,31 +237,6 @@ main {
     grid-column: span 12;
     background: linear-gradient(135deg, #0f0f14 0%, #151522 100%);
     border-color: rgba(0, 229, 255, 0.25);
-}
-
-.featured-card {
-    grid-column: span 12;
-    background: linear-gradient(135deg, #0f0f14 0%, #151522 100%);
-    border-color: rgba(0, 229, 255, 0.25);
-
-.featured-card h3 {
-    font-size: 2rem;
-    color: #00e5ff;
-}
-
-.card h3 {
-    margin: 0 0 0.75rem 0;
-    font-size: 1.35rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    color: #fff;
-}
-
-.card p {
-    color: #8c8c9e;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin: 0;
 }
 
 @media (max-width: 768px) {
