@@ -78,6 +78,7 @@ main {
     
     /* 金屬光澤漸層設定 */
     background: linear-gradient(180deg, #FFFFFF 0%, #8c8c9e 100%);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     
@@ -223,6 +224,7 @@ main {
     margin: 0;
     display: -webkit-box;
     -webkit-line-clamp: 2; /* 限制內文最多顯示兩行，超過變成省略號，確保黑色方塊不會被文字撐太高 */
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
