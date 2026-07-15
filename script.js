@@ -82,6 +82,7 @@ const projectData = {
         title: 'L1 RACING 概念賽車',
         img: 'jpg/l1.jpg',
         desc: '在 Rhinoceros 中經歷複雜的曲面建構，完美融合 Café Racer 的復古骨戢與現代空力套件。特製的散熱鷚片與中心樢紐轉向系統展現了高度的機械合理性。',
+        video: '58FEiOlyQSM',
         images: [
             'jpg/Lee_Po-Sheng Portfolio_page-0014.jpg',
             'jpg/Lee_Po-Sheng Portfolio_page-0015.jpg',
