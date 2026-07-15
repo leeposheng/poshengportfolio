@@ -140,6 +140,15 @@ function openModal(projectId) {
     bodyContent.innerHTML = contentHTML;
     modal.classList.add('active');
     document.body.style.overflow = 'hidden'; // 鎖住背後網頁不讓它滾動
+    
+    // 為所有圖片添加點擊放大功能
+    setTimeout(() => {
+        const images = bodyContent.querySelectorAll('img');
+        images.forEach((img) => {
+            img.style.cursor = 'pointer';
+            img.addEventListener('click', () => openLightbox(img.src));
+        });
+    }, 0);
 }
 
 function closeModal() {
@@ -155,3 +164,51 @@ window.onclick = function(event) {
         closeModal();
     }
 }
+
+/* =========================================
+   3. 圖片放大燈箱 (Lightbox) 功能
+   ========================================= */
+function openLightbox(imageSrc) {
+    let lightbox = document.getElementById('lightbox');
+    
+    // 如果不存在則創建燈箱
+    if (!lightbox) {
+        lightbox = document.createElement('div');
+        lightbox.id = 'lightbox';
+        lightbox.className = 'lightbox';
+        lightbox.innerHTML = `
+            <span class="lightbox-close">&times;</span>
+            <img class="lightbox-image" src="" alt="Enlarged image">
+        `;
+        document.body.appendChild(lightbox);
+        
+        // 關閉按鈕事件
+        lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+        
+        // 點擊燈箱外部關閉
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+    }
+    
+    lightbox.querySelector('.lightbox-image').src = imageSrc;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    if (lightbox) {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// 按 ESC 鍵關閉燈箱
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeLightbox();
+    }
+});
