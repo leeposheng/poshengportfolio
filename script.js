@@ -64,7 +64,11 @@ const projectData = {
     'mask': {
         title: 'MASK 賽博龐克防護面罩',
         img: 'jpg/Lee_Po-Sheng Portfolio_page-0009.jpg',
-        desc: '深入探討主動式通風機制的氣流力學，以及 A2 模組化濾網的快拆結構設計。運用極簡的白色主體搭配科技霓虹光環，展現強烈的工業機甲美學。'
+        desc: '深入探討主動式通風機制的氣流力學，以及 A2 模組化濾網的快拆結構設計。運用極簡的白色主體搭配科技霓虹光環，展現強烈的工業機甲美學。',
+        images: [
+            'jpg/Lee_Po-Sheng Portfolio_page-0010.jpg',
+            'jpg/Lee_Po-Sheng Portfolio_page-0011.jpg'
+        ]
     },
     'l1': {
         title: 'L1 RACING 概念賽車',
@@ -84,7 +88,7 @@ function openModal(projectId) {
     const data = projectData[projectId];
 
     // 動態將資料塞入視窗內
-    bodyContent.innerHTML = `
+    let contentHTML = `
         <h2>${data.title}</h2>
         <img src="${data.img}" alt="${data.title}">
         <div class="project-details">
@@ -92,6 +96,16 @@ function openModal(projectId) {
         </div>
     `;
     
+    // 如果有額外圖片，添加到內容中
+    if (data.images && data.images.length > 0) {
+        contentHTML += '<div class="additional-images">';
+        data.images.forEach((imgSrc) => {
+            contentHTML += `<img src="${imgSrc}" alt="${data.title} detail">`;
+        });
+        contentHTML += '</div>';
+    }
+    
+    bodyContent.innerHTML = contentHTML;
     modal.classList.add('active');
     document.body.style.overflow = 'hidden'; // 鎖住背後網頁不讓它滾動
 }
