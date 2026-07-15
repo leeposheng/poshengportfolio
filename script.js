@@ -60,6 +60,7 @@ const projectData = {
         title: 'Floating Life 浮生未央',
         img: 'jpg/Lee_Po-Sheng Portfolio_page-0023.jpg',
         desc: '這是一個探討空間動線與秩序美學的策展計畫。利用深邃的視覺與浮動元素，創造出脫離日常引力的展演空間。這裡未來可以補上更多關於你如何建構這些空間的 3D 渲染圖與理念。',
+        video: 'hyXIjNYpf2k',
         images: [
             'jpg/Lee_Po-Sheng Portfolio_page-0024.jpg',
             'jpg/Lee_Po-Sheng Portfolio_page-0025.jpg',
@@ -73,7 +74,8 @@ const projectData = {
         desc: '深入探討主動式通風機制的氣流力學，以及 A2 模組化濾網的快拆結構設計。運用極簡的白色主體搭配科技霓虹光環，展現強烈的工業機甲美學。',
         images: [
             'jpg/Lee_Po-Sheng Portfolio_page-0010.jpg',
-            'jpg/Lee_Po-Sheng Portfolio_page-0011.jpg'
+            'jpg/Lee_Po-Sheng Portfolio_page-0011.jpg',
+            'jpg/Lee_Po-Sheng Portfolio_page-0012.jpg'
         ]
     },
     'l1': {
@@ -82,7 +84,9 @@ const projectData = {
         desc: '在 Rhinoceros 中經歷複雜的曲面建構，完美融合 Café Racer 的復古骨戢與現代空力套件。特製的散熱鷚片與中心樢紐轉向系統展現了高度的機械合理性。',
         images: [
             'jpg/Lee_Po-Sheng Portfolio_page-0014.jpg',
-            'jpg/Lee_Po-Sheng Portfolio_page-0015.jpg'
+            'jpg/Lee_Po-Sheng Portfolio_page-0015.jpg',
+            'jpg/Lee_Po-Sheng Portfolio_page-0016.jpg',
+            'jpg/Lee_Po-Sheng Portfolio_page-0017.jpg'
         ]
     },
     'device': {
@@ -104,7 +108,20 @@ function openModal(projectId) {
     // 動態將資料塞入視窗內
     let contentHTML = `
         <h2>${data.title}</h2>
-        <img src="${data.img}" alt="${data.title}">
+    `;
+    
+    // 如果有影片，優先顯示影片
+    if (data.video) {
+        contentHTML += `
+            <div class="video-container">
+                <iframe width="100%" height="400" src="https://www.youtube.com/embed/${data.video}" title="${data.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        `;
+    }
+    
+    contentHTML += `<img src="${data.img}" alt="${data.title}">`;
+    
+    contentHTML += `
         <div class="project-details">
             <p>${data.desc}</p>
         </div>
