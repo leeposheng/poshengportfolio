@@ -141,6 +141,24 @@ function openModal(projectId) {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden'; // 鎖住背後網頁不讓它滾動
     
+    // 為 modal 內容元素添加動畫
+    setTimeout(() => {
+        const heading = bodyContent.querySelector('h2');
+        const images = bodyContent.querySelectorAll('img');
+        const details = bodyContent.querySelector('.project-details');
+        const additionalImages = bodyContent.querySelector('.additional-images');
+        
+        if (heading) heading.style.animation = 'fadeInUp 0.6s ease-out';
+        if (details) details.style.animation = 'fadeInUp 0.6s ease-out 0.2s both';
+        if (additionalImages) additionalImages.style.animation = 'fadeInUp 0.6s ease-out 0.3s both';
+        
+        images.forEach((img, index) => {
+            if (index === 0) {
+                img.style.animation = 'fadeInUp 0.6s ease-out 0.1s both';
+            }
+        });
+    }, 50);
+    
     // 為所有圖片添加點擊放大功能
     setTimeout(() => {
         const images = bodyContent.querySelectorAll('img');
