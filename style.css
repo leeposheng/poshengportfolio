@@ -143,20 +143,16 @@ main {
     gap: 1.5rem;
 }
 
+/* 確保卡片樣式正確且滑鼠會變成手指 */
 .card {
-    /* 將超連結卡片的預設樣式歸零 */
-a.card {
-    text-decoration: none; /* 去除底線 */
-    display: block; /* 讓連結區塊像一般 div 一樣填滿空間 */
-    color: inherit; /* 繼承原本的字體顏色 */
-}
     grid-column: span 6;
     background-color: #0f0f14;
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 4px;
     position: relative;
     overflow: hidden;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, background-color 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+    cursor: pointer; /* 滑鼠移入變成點擊手勢 */
 }
 
 .card::before {
@@ -207,9 +203,10 @@ a.card {
     border-color: rgba(0, 229, 255, 0.25);
 }
 
-.featured-card .card-img-wrapper {
-    height: 380px;
-}
+.featured-card {
+    grid-column: span 12;
+    background: linear-gradient(135deg, #0f0f14 0%, #151522 100%);
+    border-color: rgba(0, 229, 255, 0.25);
 
 .featured-card h3 {
     font-size: 2rem;
@@ -235,4 +232,87 @@ a.card {
     .card, .featured-card {
         grid-column: span 12;
     }
+}
+/* =========================================
+   Modal 滿版科技感視窗樣式
+   ========================================= */
+.modal {
+    display: none; /* 預設隱藏 */
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(5, 5, 7, 0.85); /* 深色毛玻璃遮罩 */
+    backdrop-filter: blur(12px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+}
+
+.modal-content {
+    background: #0a0a0c;
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    box-shadow: 0 0 40px rgba(0, 229, 255, 0.05);
+    width: 90%;
+    max-width: 1100px;
+    height: 85vh;
+    border-radius: 4px;
+    position: relative;
+    transform: translateY(30px);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow-y: auto;
+}
+
+.modal.active .modal-content {
+    transform: translateY(0);
+}
+
+.close-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    color: #8c8c9e;
+    font-size: 2.5rem;
+    font-weight: 300;
+    cursor: pointer;
+    transition: color 0.2s;
+    z-index: 10;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: #00e5ff;
+}
+
+.modal-body {
+    padding: 4rem;
+}
+
+.modal-body h2 {
+    font-size: 2.5rem;
+    margin-top: 0;
+    color: #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 1rem;
+}
+
+.modal-body img {
+    width: 100%;
+    border-radius: 4px;
+    margin: 2rem 0;
+}
+
+.project-details p {
+    color: #a1a1b5;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
 }

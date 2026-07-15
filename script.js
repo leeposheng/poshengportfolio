@@ -1,56 +1,111 @@
-// 1. 初始化場景、相機、渲染器
+/* =========================================
+   1. Three.js 3D 賽博龐克背景動畫
+   ========================================= */
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); // alpha: true 允許背景透明
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
-document.getElementById('canvas-container').appendChild(renderer.domElement);
+// 確保 HTML 裡有 <div id="canvas-container"></div>
+const container = document.getElementById('canvas-container');
+if (container) {
+    container.appendChild(renderer.domElement);
+}
 
-// 2. 建立幾何模型 (這裡先用二十面體模擬 L1 RACING 的幾何結構)
-const geometry = new THREE.IcosahedronGeometry(2, 1); // 半徑 2，細節 1
+const geometry = new THREE.IcosahedronGeometry(2, 1); 
 
-// 3. 建立材質：結合深色實體與發光網格
 const material = new THREE.MeshBasicMaterial({ 
-    color: 0x111111, // 深色實體
-    wireframe: true, // 顯示網格
+    color: 0x111111, 
+    wireframe: true, 
     wireframeLinewidth: 2,
     transparent: true,
     opacity: 0.8
 });
 
-// 在實體外面再套一層發光的純網格，增加科技感
 const wireframeGeometry = new THREE.WireframeGeometry(geometry);
-const wireframeMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff }); // 青色發光線條
+const wireframeMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff }); 
 const wireframe = new THREE.LineSegments(wireframeGeometry, wireframeMaterial);
 
 const mesh = new THREE.Mesh(geometry, material);
-mesh.add(wireframe); // 將發光線條加入模型中
+mesh.add(wireframe); 
 
-// 將模型向右推一點，與左邊的文字平衡
 mesh.position.x = 2;
 scene.add(mesh);
 
 camera.position.z = 5;
 
-// 4. 動畫迴圈 (讓模型緩慢旋轉)
 function animate() {
     requestAnimationFrame(animate);
-
     mesh.rotation.x += 0.005;
     mesh.rotation.y += 0.005;
-
     renderer.render(scene, camera);
 }
-
 animate();
 
-// 5. 視窗縮放自適應 (RWD)
 window.addEventListener('resize', () => {
     const width = window.innerWidth;
     const height = window.innerHeight;
-    
     renderer.setSize(width, height);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
 });
+
+
+/* =========================================
+   2. 滿版科技感視窗 (Modal) 互動邏輯
+   ========================================= */
+const projectData = {
+    'floating': {
+        title: 'Floating Life 浮生未央',
+        img: 'jpg/Lee_Po-Sheng Portfolio_page-0023.jpg',
+        desc: '這是一個探討空間動線與秩序美學的策展計畫。利用深邃的視覺與浮動元素，創造出脫離日常引力的展演空間。這裡未來可以補上更多關於你如何建構這些空間的 3D 渲染圖與理念。'
+    },
+    'mask': {
+        title: 'MASK 賽博龐克防護面罩',
+        img: 'jpg/Lee_Po-Sheng Portfolio_page-0009.jpg',
+        desc: '深入探討主動式通風機制的氣流力學，以及 A2 模組化濾網的快拆結構設計。運用極簡的白色主體搭配科技霓虹光環，展現強烈的工業機甲美學。'
+    },
+    'l1': {
+        title: 'L1 RACING 概念賽車',
+        img: 'jpg/l1.jpg',
+        desc: '在 Rhinoceros 中經歷複雜的曲面建構，完美融合 Café Racer 的復古骨架與現代空力套件。特製的散熱鰭片與中心樞紐轉向系統展現了高度的機械合理性。'
+    },
+    'device': {
+        title: 'Gain Support Device',
+        img: 'jpg/device.jpg',
+        desc: '針對 L3-S1 椎間盤區域的防護機制所開發。展示了如何將碳纖維的輕量化特性與乳膠減震科技結合，為現代工作者打造具備人因工程的穿戴式裝備。'
+    }
+};
+
+function openModal(projectId) {
+    const modal = document.getElementById('project-modal');
+    const bodyContent = document.getElementById('modal-body-content');
+    const data = projectData[projectId];
+
+    // 動態將資料塞入視窗內
+    bodyContent.innerHTML = `
+        <h2>${data.title}</h2>
+        <img src="${data.img}" alt="${data.title}">
+        <div class="project-details">
+            <p>${data.desc}</p>
+        </div>
+    `;
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // 鎖住背後網頁不讓它滾動
+}
+
+function closeModal() {
+    const modal = document.getElementById('project-modal');
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto'; // 恢復背後網頁滾動
+}
+
+// 點擊 Modal 外部深色遮罩時，自動關閉視窗
+window.onclick = function(event) {
+    const modal = document.getElementById('project-modal');
+    if (event.target === modal) {
+        closeModal();
+    }
+}
