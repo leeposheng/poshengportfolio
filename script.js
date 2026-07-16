@@ -1,5 +1,5 @@
 /* =========================================
-   1. Three.js 3D 賽博龐克背景動畫
+   1. Three.js 3D Liquid Glass 背景動畫
    ========================================= */
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -7,38 +7,92 @@ const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
 // 確保 HTML 裡有 <div id="canvas-container"></div>
 const container = document.getElementById('canvas-container');
 if (container) {
     container.appendChild(renderer.domElement);
 }
 
-const geometry = new THREE.IcosahedronGeometry(2, 1); 
+// 生成一個簡易的工作室光源環境貼圖,讓玻璃材質產生真實的高光與折射反射
+function createEnvironmentTexture() {
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    pmremGenerator.compileEquirectangularShader();
 
-const material = new THREE.MeshBasicMaterial({ 
-    color: 0x111111, 
-    wireframe: true, 
-    wireframeLinewidth: 2,
+    const envScene = new THREE.Scene();
+    envScene.background = new THREE.Color(0x0a0a0f);
+
+    const panelGeometry = new THREE.PlaneGeometry(24, 24);
+
+    const whitePanel = new THREE.Mesh(panelGeometry, new THREE.MeshBasicMaterial({ color: 0xffffff }));
+    whitePanel.position.set(-18, 12, -8);
+    whitePanel.lookAt(0, 0, 0);
+    envScene.add(whitePanel);
+
+    const cyanPanel = new THREE.Mesh(panelGeometry, new THREE.MeshBasicMaterial({ color: 0x00e5ff }));
+    cyanPanel.position.set(20, -6, 10);
+    cyanPanel.lookAt(0, 0, 0);
+    envScene.add(cyanPanel);
+
+    const softPanel = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.MeshBasicMaterial({ color: 0x33334a }));
+    softPanel.position.set(0, -25, 0);
+    softPanel.rotation.x = -Math.PI / 2;
+    envScene.add(softPanel);
+
+    const renderTarget = pmremGenerator.fromScene(envScene, 0.04);
+    pmremGenerator.dispose();
+    return renderTarget.texture;
+}
+
+scene.environment = createEnvironmentTexture();
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.35);
+scene.add(ambientLight);
+
+const keyLight = new THREE.PointLight(0x00e5ff, 2.5, 50);
+keyLight.position.set(5, 5, 5);
+scene.add(keyLight);
+
+const fillLight = new THREE.PointLight(0xffffff, 1.5, 50);
+fillLight.position.set(-5, -3, 4);
+scene.add(fillLight);
+
+// 玻璃球背後放一片細格線,讓透光材質有東西可以折射,才看得出「液態玻璃」的扭曲感
+const backdropGrid = new THREE.GridHelper(30, 30, 0x2a2a3a, 0x1a1a24);
+backdropGrid.position.z = -6;
+backdropGrid.rotation.x = Math.PI / 2;
+scene.add(backdropGrid);
+
+const glassGeometry = new THREE.SphereGeometry(2, 96, 96);
+
+const glassMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0xffffff,
+    metalness: 0,
+    roughness: 0.05,
+    transmission: 1,
+    thickness: 2,
+    ior: 1.45,
+    envMapIntensity: 1.2,
+    clearcoat: 1,
+    clearcoatRoughness: 0.08,
     transparent: true,
-    opacity: 0.8
 });
 
-const wireframeGeometry = new THREE.WireframeGeometry(geometry);
-const wireframeMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff }); 
-const wireframe = new THREE.LineSegments(wireframeGeometry, wireframeMaterial);
-
-const mesh = new THREE.Mesh(geometry, material);
-mesh.add(wireframe); 
-
+const mesh = new THREE.Mesh(glassGeometry, glassMaterial);
 mesh.position.x = 2;
 scene.add(mesh);
 
 camera.position.z = 5;
 
+let elapsed = 0;
 function animate() {
     requestAnimationFrame(animate);
-    mesh.rotation.x += 0.005;
-    mesh.rotation.y += 0.005;
+    elapsed += 0.005;
+    mesh.rotation.x = elapsed * 0.3;
+    mesh.rotation.y = elapsed * 0.5;
+    mesh.position.y = Math.sin(elapsed) * 0.3;
     renderer.render(scene, camera);
 }
 animate();
