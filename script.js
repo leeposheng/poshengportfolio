@@ -98,6 +98,16 @@ const projectData = {
             'jpg/Lee_Po-Sheng Portfolio_page-0021.jpg',
             'jpg/Lee_Po-Sheng Portfolio_page-0022.jpg'
         ]
+    },
+    'geometry': {
+        title: 'GEOMETRY Mobile Chandelier',
+        img: 'jpg/Lee_Po-Sheng Portfolio_page-0004.jpg',
+        desc: '運用幾何分割與對稱美學打造的模組化吊燈設計。精妙的球形結構由多層對稱葉片組成，完美詮釋了形式與功能的統一。通過光影交錯的呈現，展現極簡主義與空間藝術的完美結合，為室內空間增添雕塑般的視覺韻味。',
+        images: [
+            'jpg/Lee_Po-Sheng Portfolio_page-0005.jpg',
+            'jpg/Lee_Po-Sheng Portfolio_page-0006.jpg',
+            'jpg/Lee_Po-Sheng Portfolio_page-0007.jpg'
+        ]
     }
 };
 

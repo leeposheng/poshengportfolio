@@ -135,36 +135,40 @@ main {
 
 .tag {
     display: inline-block;
-    padding: 0.3rem 0.8rem;
-    font-size: 0.7rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 2.5px;
+    font-family: 'Space Grotesk', sans-serif;
     background-color: rgba(0, 229, 255, 0.08);
     color: #00e5ff;
-    border: 1px solid rgba(0, 229, 255, 0.2);
-    border-radius: 2px;
-    margin-bottom: 1.5rem;
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 3px;
+    margin-bottom: 2rem;
     animation: fadeInUp 0.6s ease-out 0.1s both;
 }
 
 .hero h1 {
     font-size: clamp(2.5rem, 5vw, 4.5rem);
-    font-weight: 900;
-    line-height: 1.05;
-    margin: 0 0 1.5rem 0;
-    letter-spacing: -1.5px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 2rem 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Space Grotesk', sans-serif;
     color: #fff;
     animation: fadeInUp 0.8s ease-out 0.2s both;
 }
 
-/* 3. 中文內文的呼吸感排版 (找到 .hero p 並替換) */
 .hero p {
-    font-size: clamp(1rem, 1.2vw, 1.15rem);
-    color: #a1a1b5; /* 顏色調淡一點，拉開與標題的對比 */
-    max-width: 680px;
-    line-height: 1.8; /* 增加行高，讓閱讀更舒適 */
-    letter-spacing: 1.5px; /* 拉開中文字距，營造高級感 */
-    font-weight: 300; /* 中文使用較細的字重 */
+    font-size: clamp(0.95rem, 1.15vw, 1.1rem);
+    font-family: 'Noto Sans TC', sans-serif;
+    color: #8c8c9e;
+    max-width: 750px;
+    line-height: 1.7;
+    letter-spacing: 1px;
+    font-weight: 400;
     margin: 0;
     animation: fadeInUp 0.8s ease-out 0.3s both;
 }
