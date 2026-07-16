@@ -81,7 +81,7 @@ const projectData = {
     'l1': {
         title: 'L1 RACING 概念賽車',
         img: 'jpg/l1.jpg',
-        desc: '在 Rhinoceros 中經歷複雜的曲面建構，完美融合 Café Racer 的復古骨戢與現代空力套件。特製的散熱鷚片與中心樢紐轉向系統展現了高度的機械合理性。',
+        desc: '在 Rhinoceros 中經歷複雜的曲面建構，完美融合 Café Racer 的復古骨架與現代空力套件。特製的散熱鰭片與中心樞紐轉向系統展現了高度的機械合理性。',
         video: '58FEiOlyQSM',
         images: [
             'jpg/Lee_Po-Sheng Portfolio_page-0014.jpg',
@@ -93,7 +93,7 @@ const projectData = {
     'device': {
         title: 'Gain Support Device',
         img: 'jpg/device.jpg',
-        desc: '針對 L3-S1 椭間約區域的防護機制所開發。展示了如何將碳纖維的輕量化特性與乳膠減震科技結合，為現代工作者打造具備人因工程的穿戴式裝備。',
+        desc: '針對 L3-S1 椎間盤區域的防護機制所開發。展示了如何將碳纖維的輕量化特性與乳膠減震科技結合，為現代工作者打造具備人因工程的穿戴式裝備。',
         images: [
             'jpg/Lee_Po-Sheng Portfolio_page-0021.jpg',
             'jpg/Lee_Po-Sheng Portfolio_page-0022.jpg'

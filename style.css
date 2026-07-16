@@ -54,22 +54,10 @@ body, html {
     min-height: 100vh;
     background-color: #070709;
     color: #e2e2ec;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: 'Space Grotesk', 'Noto Sans TC', -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
     animation: fadeIn 0.8s ease-out;
-}
-
-/* 1. 全域字體替換 (找到原有的 body, html 區塊並更新 font-family) */
-body, html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100vh;
-    background-color: #070709;
-    color: #e2e2ec;
-    /* 改用我們剛引入的高階字體 */
-    font-family: 'Space Grotesk', 'Noto Sans TC', -apple-system, sans-serif; 
-    -webkit-font-smoothing: antialiased;
 }
 
 header {
@@ -115,24 +103,6 @@ main {
     margin: 0 auto;
 }
 
-/* 2. 標題賦予金屬漸層與微光暈 (找到 .hero h1 並替換) */
-.hero h1 {
-    font-size: clamp(2.8rem, 5vw, 5rem);
-    font-weight: 700;
-    line-height: 1.1;
-    margin: 0 0 1.5rem 0;
-    letter-spacing: -1.5px; /* 標題字距收緊，顯得更洗鍊 */
-    
-    /* 金屬光澤漸層設定 */
-    background: linear-gradient(180deg, #FFFFFF 0%, #8c8c9e 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    
-    /* 微微的發光感 */
-    text-shadow: 0px 10px 30px rgba(255, 255, 255, 0.08);
-}
-
 .tag {
     display: inline-block;
     padding: 0.5rem 1rem;
@@ -158,6 +128,11 @@ main {
     text-transform: uppercase;
     font-family: 'Space Grotesk', sans-serif;
     color: #fff;
+    background: linear-gradient(180deg, #FFFFFF 0%, #8c8c9e 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0px 10px 30px rgba(255, 255, 255, 0.08);
     animation: fadeInUp 0.8s ease-out 0.2s both;
 }
 
@@ -183,6 +158,7 @@ main {
     display: flex;
     align-items: center;
     animation: slideInLeft 0.8s ease-out;
+    scroll-margin-top: 100px;
 }
 
 .section-title::after {
@@ -302,6 +278,62 @@ main {
     .card, .featured-card {
         grid-column: span 12;
     }
+}
+
+/* =========================================
+   About / Contact 區塊
+   ========================================= */
+.about-section,
+.contact-section {
+    margin: 6rem 0;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.about-content p,
+.contact-content p {
+    font-size: 1.05rem;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: #a1a1b5;
+    line-height: 1.8;
+    max-width: 750px;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+.skills-list,
+.contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.skill-tag {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    color: #e2e2ec;
+}
+
+.contact-link {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #00e5ff;
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 3px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.contact-link:hover {
+    background-color: rgba(0, 229, 255, 0.1);
 }
 /* =========================================
    Modal 滿版科技感視窗樣式
@@ -425,7 +457,6 @@ main {
 .additional-images-device img {
     /* 保持等大，不放大 */
 }
-
 /* =========================================
    圖片放大燈箱 (Lightbox) 樣式
    ========================================= */
