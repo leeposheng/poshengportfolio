@@ -285,6 +285,26 @@ main {
     animation: scaleIn 0.6s ease-out;
 }
 
+.card-third {
+    grid-column: span 4;
+}
+
+.card-img-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02) 10px, rgba(255, 255, 255, 0.04) 10px, rgba(255, 255, 255, 0.04) 20px);
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+}
+
+.placeholder-label {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #5a5a6e;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
 @media (max-width: 768px) {
     .card, .featured-card {
         grid-column: span 12;

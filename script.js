@@ -162,6 +162,29 @@ const projectData = {
             'jpg/Lee_Po-Sheng Portfolio_page-0006.jpg',
             'jpg/Lee_Po-Sheng Portfolio_page-0007.jpg'
         ]
+    },
+    'pc-build-1': {
+        title: '組裝電腦作品 01',
+        img: 'jpg/電腦店/福利連顯卡/Gemini_Generated_Image_p48gkpp48gkpp48g.png',
+        desc: '結合 AI 創作技術與高端電腦組裝的融合專案，展現個性化 Gaming PC 的設計美學與功能完整性。這張圖片作為作品 01 的主視覺展示。',
+        images: [
+            'jpg/電腦店/福利連顯卡/Gemini_Generated_Image_xuhakgxuhakgxuha.png',
+            'jpg/電腦店/福利連顯卡/Gemini_Generated_Image_y16r1gy16r1gy16r.png'
+        ]
+    },
+    'pc-build-2': {
+        title: '組裝電腦作品 02',
+        img: 'jpg/電腦店/32800/Gemini_Generated_Image_b1ov80b1ov80b1ov.png',
+        desc: '結合 AI 創作技術與高端電腦組裝的融合專案，展現個性化 Gaming PC 的設計美學與功能完整性。這張圖片作為作品 02 的主視覺展示。',
+        images: [
+            'jpg/電腦店/32800/Gemini_Generated_Image_b1ov80b1ov80b1ov.png',
+            'jpg/電腦店/32800/Gemini_Generated_Image_wdah9fwdah9fwdah.png'
+        ]
+    },
+    'pc-build-3': {
+        title: '組裝電腦作品 03',
+        img: 'jpg/電腦店/5070TI/Gemini_Generated_Image_r15k8or15k8or15k.png',
+        desc: '結合 AI 創作技術與高端電腦組裝的融合專案，展現個性化 Gaming PC 的設計美學與功能完整性。這張圖片作為作品 03 的主視覺展示。'
     }
 };
 
@@ -184,7 +207,9 @@ function openModal(projectId) {
         `;
     }
     
-    contentHTML += `<img src="${data.img}" alt="${data.title}">`;
+    if (data.img) {
+        contentHTML += `<img src="${data.img}" alt="${data.title}">`;
+    }
     
     contentHTML += `
         <div class="project-details">
