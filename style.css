@@ -52,7 +52,13 @@ body, html {
     padding: 0;
     width: 100%;
     min-height: 100vh;
-    background-color: #070709;
+    background-color: #0a0a10;
+    background-image:
+        radial-gradient(ellipse 80% 60% at 15% 0%, rgba(0, 229, 255, 0.12), transparent 60%),
+        radial-gradient(ellipse 70% 55% at 85% 15%, rgba(123, 92, 255, 0.10), transparent 60%),
+        radial-gradient(ellipse 90% 70% at 50% 100%, rgba(0, 229, 255, 0.06), transparent 65%),
+        linear-gradient(180deg, #0d0d16 0%, #060608 45%, #0b0b14 100%);
+    background-attachment: fixed;
     color: #e2e2ec;
     font-family: 'Space Grotesk', 'Noto Sans TC', -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
