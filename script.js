@@ -1,113 +1,5 @@
 /* =========================================
-   1. Three.js 3D Liquid Glass 背景動畫
-   ========================================= */
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.1;
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-// 確保 HTML 裡有 <div id="canvas-container"></div>
-const container = document.getElementById('canvas-container');
-if (container) {
-    container.appendChild(renderer.domElement);
-}
-
-// 生成一個簡易的工作室光源環境貼圖,讓玻璃材質產生真實的高光與折射反射
-function createEnvironmentTexture() {
-    const pmremGenerator = new THREE.PMREMGenerator(renderer);
-    pmremGenerator.compileEquirectangularShader();
-
-    const envScene = new THREE.Scene();
-    envScene.background = new THREE.Color(0x0a0a0f);
-
-    const panelGeometry = new THREE.PlaneGeometry(24, 24);
-
-    const whitePanel = new THREE.Mesh(panelGeometry, new THREE.MeshBasicMaterial({ color: 0xffffff }));
-    whitePanel.position.set(-18, 12, -8);
-    whitePanel.lookAt(0, 0, 0);
-    envScene.add(whitePanel);
-
-    const cyanPanel = new THREE.Mesh(panelGeometry, new THREE.MeshBasicMaterial({ color: 0x00e5ff }));
-    cyanPanel.position.set(20, -6, 10);
-    cyanPanel.lookAt(0, 0, 0);
-    envScene.add(cyanPanel);
-
-    const softPanel = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.MeshBasicMaterial({ color: 0x33334a }));
-    softPanel.position.set(0, -25, 0);
-    softPanel.rotation.x = -Math.PI / 2;
-    envScene.add(softPanel);
-
-    const renderTarget = pmremGenerator.fromScene(envScene, 0.04);
-    pmremGenerator.dispose();
-    return renderTarget.texture;
-}
-
-scene.environment = createEnvironmentTexture();
-
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.35);
-scene.add(ambientLight);
-
-const keyLight = new THREE.PointLight(0x00e5ff, 2.5, 50);
-keyLight.position.set(5, 5, 5);
-scene.add(keyLight);
-
-const fillLight = new THREE.PointLight(0xffffff, 1.5, 50);
-fillLight.position.set(-5, -3, 4);
-scene.add(fillLight);
-
-// 玻璃球背後放一片細格線,讓透光材質有東西可以折射,才看得出「液態玻璃」的扭曲感
-const backdropGrid = new THREE.GridHelper(30, 30, 0x2a2a3a, 0x1a1a24);
-backdropGrid.position.z = -6;
-backdropGrid.rotation.x = Math.PI / 2;
-scene.add(backdropGrid);
-
-const glassGeometry = new THREE.SphereGeometry(2, 96, 96);
-
-const glassMaterial = new THREE.MeshPhysicalMaterial({
-    color: 0xffffff,
-    metalness: 0,
-    roughness: 0.05,
-    transmission: 1,
-    thickness: 2,
-    ior: 1.45,
-    envMapIntensity: 1.2,
-    clearcoat: 1,
-    clearcoatRoughness: 0.08,
-    transparent: true,
-});
-
-const mesh = new THREE.Mesh(glassGeometry, glassMaterial);
-mesh.position.x = 2;
-scene.add(mesh);
-
-camera.position.z = 5;
-
-let elapsed = 0;
-function animate() {
-    requestAnimationFrame(animate);
-    elapsed += 0.005;
-    mesh.rotation.x = elapsed * 0.3;
-    mesh.rotation.y = elapsed * 0.5;
-    mesh.position.y = Math.sin(elapsed) * 0.3;
-    renderer.render(scene, camera);
-}
-animate();
-
-window.addEventListener('resize', () => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    renderer.setSize(width, height);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-});
-
-
-/* =========================================
-   2. 滿版科技感視窗 (Modal) 互動邏輯
+   1. 滿版科技感視窗 (Modal) 互動邏輯
    ========================================= */
 const projectData = {
     'floating': {
@@ -199,10 +91,23 @@ const projectData = {
     }
 };
 
+// 項目清單及導航管理
+const projectList = ['floating', 'mask', 'l1', 'device', 'geometry', 'pc-build-1', 'pc-build-2', 'pc-build-3'];
+let currentProjectIndex = 0;
+
 function openModal(projectId) {
     const modal = document.getElementById('project-modal');
     const bodyContent = document.getElementById('modal-body-content');
     const data = projectData[projectId];
+    
+    // 記錄當前項目索引
+    currentProjectIndex = projectList.indexOf(projectId);
+
+    // 在第一個/最後一個作品時，將對應箭頭設為不可用
+    const prevArrow = document.querySelector('.nav-arrow-prev');
+    const nextArrow = document.querySelector('.nav-arrow-next');
+    if (prevArrow) prevArrow.classList.toggle('disabled', currentProjectIndex <= 0);
+    if (nextArrow) nextArrow.classList.toggle('disabled', currentProjectIndex >= projectList.length - 1);
 
     // 動態將資料塞入視窗內
     let contentHTML = `
@@ -301,6 +206,36 @@ function closeModal() {
     const modal = document.getElementById('project-modal');
     modal.classList.remove('active');
     document.body.style.overflow = 'auto'; // 恢復背後網頁滾動
+}
+
+// 導航到前後項目
+function navigateProject(direction) {
+    const newIndex = currentProjectIndex + direction;
+    
+    // 檢查邊界
+    if (newIndex < 0 || newIndex >= projectList.length) {
+        return; // 在邊界處不進行操作
+    }
+    
+    const nextProjectId = projectList[newIndex];
+    
+    // 平滑關閉當前 modal，然後打開下一個
+    const modal = document.getElementById('project-modal');
+    const bodyContent = document.getElementById('modal-body-content');
+    
+    // 添加淡出動畫
+    bodyContent.style.opacity = '0';
+    bodyContent.style.transition = 'opacity 0.2s ease-out';
+    
+    setTimeout(() => {
+        // 打開新項目
+        openModal(nextProjectId);
+        // 重置不透明度
+        bodyContent.style.opacity = '1';
+        bodyContent.style.transition = 'opacity 0.3s ease-in';
+        // 滾動到頂部
+        bodyContent.scrollTop = 0;
+    }, 200);
 }
 
 // 點擊 Modal 外部深色遮罩時，自動關閉視窗

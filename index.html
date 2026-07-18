@@ -8,14 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
-    
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div id="canvas-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></div>
 
     <header>
         <div class="logo">LEE PO-SHENG</div>
@@ -119,7 +115,7 @@
         <section class="about-section" id="about">
             <h2 class="section-title">About</h2>
             <div class="about-content">
-                <p>我是 Lee Po-Sheng(李柏昇),工業設計研究生與獨立設計師。作品橫跨產品設計、展覽策劃與前端互動開發,擅長運用 Rhinoceros 進行複雜曲面建模,並將人因工程原理導入穿戴式裝置與輔具設計。近年也持續將設計思維延伸至數位介面,透過程式碼打造兼具互動感與科技質感的網頁體驗。</p>
+                <p>我是李柏昇 (Lee Po-Sheng)，一名致力於跨界整合的獨立設計師與工業設計研究生。我的創作思維穿梭於實體與數位之間，涵蓋產品開發、展覽策劃與前端互動設計。在實體端，我擅長以 Rhinoceros 構築複雜曲面，並將嚴謹的人因工程深度導入穿戴式裝置與醫療輔具之中；近年更將此設計脈絡延伸至數位載體，透過程式碼作為新維度，打造兼具流暢互動與前衛科技感的網頁體驗。</p>
                 <div class="skills-list">
                     <span class="skill-tag">Rhinoceros</span>
                     <span class="skill-tag">KeyShot</span>
@@ -144,6 +140,8 @@
     </main>
 
     <div id="project-modal" class="modal">
+        <button class="nav-arrow nav-arrow-prev" onclick="navigateProject(-1)" title="上一個作品">‹</button>
+        <button class="nav-arrow nav-arrow-next" onclick="navigateProject(1)" title="下一個作品">›</button>
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
             <div class="modal-body" id="modal-body-content">
