@@ -15,11 +15,22 @@
 
     <header>
         <div class="logo">LEE PO-SHENG</div>
-        <nav class="nav-links">
-            <a href="#works">Works</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-        </nav>
+        <div class="header-tools">
+            <nav class="nav-links">
+                <a href="#works">Works</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <div class="view-controls" aria-label="顯示設定">
+                <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-pressed="false">白色系</button>
+                <label class="saturation-control" for="saturation-range">
+                    <span>鮮豔度</span>
+                    <input id="saturation-range" type="range" min="70" max="150" step="5" value="100">
+                    <output id="saturation-value">100%</output>
+                </label>
+            </div>
+        </div>
     </header>
 
     <main>

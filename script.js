@@ -306,3 +306,97 @@ document.addEventListener('keydown', (e) => {
         closeLightbox();
     }
 });
+
+/* =========================================
+   4. 顯示模式與鮮豔度控制
+   ========================================= */
+const THEME_STORAGE_KEY = 'portfolio-theme';
+const SATURATION_STORAGE_KEY = 'portfolio-saturation';
+
+function clampSaturation(value) {
+    const numeric = Number(value);
+    if (Number.isNaN(numeric)) return 100;
+    return Math.max(70, Math.min(150, numeric));
+}
+
+function applyTheme(theme) {
+    const root = document.documentElement;
+    const toggleBtn = document.getElementById('theme-toggle-btn');
+    const finalTheme = theme === 'light' ? 'light' : 'dark';
+
+    root.setAttribute('data-theme', finalTheme);
+
+    if (toggleBtn) {
+        const isLight = finalTheme === 'light';
+        toggleBtn.textContent = isLight ? '暗色系' : '白色系';
+        toggleBtn.setAttribute('aria-pressed', String(isLight));
+    }
+
+    try {
+        localStorage.setItem(THEME_STORAGE_KEY, finalTheme);
+    } catch (error) {
+        // 忽略無法存取 localStorage 的情況
+    }
+}
+
+function applySaturation(value) {
+    const root = document.documentElement;
+    const saturationRange = document.getElementById('saturation-range');
+    const saturationValue = document.getElementById('saturation-value');
+    const finalValue = clampSaturation(value);
+
+    root.style.setProperty('--global-saturation', `${finalValue}%`);
+
+    if (saturationRange) {
+        saturationRange.value = String(finalValue);
+    }
+
+    if (saturationValue) {
+        saturationValue.textContent = `${finalValue}%`;
+    }
+
+    try {
+        localStorage.setItem(SATURATION_STORAGE_KEY, String(finalValue));
+    } catch (error) {
+        // 忽略無法存取 localStorage 的情況
+    }
+}
+
+function initDisplayControls() {
+    const toggleBtn = document.getElementById('theme-toggle-btn');
+    const saturationRange = document.getElementById('saturation-range');
+
+    const storedTheme = (() => {
+        try {
+            return localStorage.getItem(THEME_STORAGE_KEY);
+        } catch (error) {
+            return null;
+        }
+    })();
+
+    const storedSaturation = (() => {
+        try {
+            return localStorage.getItem(SATURATION_STORAGE_KEY);
+        } catch (error) {
+            return null;
+        }
+    })();
+
+    applyTheme(storedTheme || 'dark');
+    applySaturation(storedSaturation || 100);
+
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            const nextTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            applyTheme(nextTheme);
+        });
+    }
+
+    if (saturationRange) {
+        saturationRange.addEventListener('input', (event) => {
+            applySaturation(event.target.value);
+        });
+    }
+}
+
+initDisplayControls();
