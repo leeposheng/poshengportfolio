@@ -125,6 +125,8 @@ header {
     cursor: pointer;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
     transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .theme-toggle:hover {
@@ -141,6 +143,8 @@ header {
     font-size: 0.72rem;
     letter-spacing: 0.8px;
     font-family: 'Noto Sans TC', sans-serif;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 #saturation-range {
@@ -454,6 +458,8 @@ main {
 
     .header-tools {
         width: 100%;
+        flex-wrap: wrap;
+        row-gap: 0.6rem;
         justify-content: space-between;
     }
 
@@ -468,8 +474,69 @@ main {
     }
 
     .view-controls {
-        flex: 1;
-        justify-content: flex-end;
+        flex: 1 1 100%;
+        justify-content: space-between;
+    }
+
+    .modal-content {
+        width: 94%;
+        height: 88vh;
+    }
+
+    .modal-body {
+        padding: 3.75rem 1.25rem 1.75rem;
+    }
+
+    .modal-body h2 {
+        font-size: 1.5rem;
+        padding-bottom: 0.75rem;
+    }
+
+    .project-details p {
+        font-size: 0.95rem;
+        line-height: 1.7;
+    }
+
+    .modal-body img {
+        margin: 1.25rem 0;
+    }
+
+    .additional-images {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 1.25rem;
+    }
+
+    .additional-images-mask img:last-child {
+        grid-column: span 1;
+    }
+
+    .project-instagram {
+        padding: 0.75rem;
+    }
+
+    .close-btn {
+        top: 1rem;
+        right: 1rem;
+        font-size: 2rem;
+    }
+
+    .nav-arrow {
+        width: 34px;
+        height: 34px;
+        font-size: 1rem;
+    }
+
+    .nav-arrow-prev {
+        left: 0.5rem;
+    }
+
+    .nav-arrow-next {
+        right: 0.5rem;
+    }
+
+    .project-section-label {
+        margin: 2rem 0 1rem 0;
     }
 }
 
