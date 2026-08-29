@@ -106,12 +106,16 @@ const projectData = {
 // 項目清單及導航管理
 const projectList = ['floating', 'mask', 'l1', 'device', 'geometry', 'pc-build-1', 'pc-build-2', 'pc-build-3', 'quant-cortex'];
 let currentProjectIndex = 0;
+let lastFocusedElement = null; // 開啟視窗前的焦點元素，關閉後歸還
 
 function openModal(projectId) {
     const modal = document.getElementById('project-modal');
     const bodyContent = document.getElementById('modal-body-content');
     const data = projectData[projectId];
-    
+
+    // 未知的作品 ID 直接略過，避免存取 undefined 而報錯
+    if (!data) return;
+
     // 記錄當前項目索引
     currentProjectIndex = projectList.indexOf(projectId);
 
@@ -173,9 +177,22 @@ function openModal(projectId) {
         contentHTML += '</div>';
     }
     
+    // 首次開啟時記住目前焦點，切換作品時不覆蓋
+    if (!modal.classList.contains('active')) {
+        lastFocusedElement = document.activeElement;
+    }
+
     bodyContent.innerHTML = contentHTML;
     modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    modal.setAttribute('aria-label', data.title ? `作品：${data.title}` : '作品詳細內容');
     document.body.style.overflow = 'hidden'; // 鎖住背後網頁不讓它滾動
+
+    // 將焦點移入視窗，方便鍵盤操作與螢幕閱讀器
+    const closeBtn = modal.querySelector('.close-btn');
+    if (closeBtn) {
+        setTimeout(() => closeBtn.focus(), 0);
+    }
     
     // 為 modal 內容元素添加動畫
     setTimeout(() => {
@@ -218,7 +235,34 @@ function openModal(projectId) {
 function closeModal() {
     const modal = document.getElementById('project-modal');
     modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = 'auto'; // 恢復背後網頁滾動
+
+    // 把焦點還給開啟視窗前的元素（通常是被點擊的卡片）
+    if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+        lastFocusedElement.focus();
+    }
+    lastFocusedElement = null;
+}
+
+// 將 Tab 焦點限制在指定容器內循環
+function trapFocus(container, event) {
+    const selector = 'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    const focusable = Array.from(container.querySelectorAll(selector)).filter((el) => {
+        return !el.disabled && !el.classList.contains('disabled') && el.offsetParent !== null;
+    });
+    if (focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+    }
 }
 
 // 導航到前後項目
@@ -296,14 +340,37 @@ function closeLightbox() {
     const lightbox = document.getElementById('lightbox');
     if (lightbox) {
         lightbox.classList.remove('active');
-        document.body.style.overflow = 'auto';
+        // 若底層的作品視窗仍開著，維持背景不可捲動
+        const modal = document.getElementById('project-modal');
+        const modalOpen = modal && modal.classList.contains('active');
+        document.body.style.overflow = modalOpen ? 'hidden' : 'auto';
     }
 }
 
-// 按 ESC 鍵關閉燈箱
+// 鍵盤操作：ESC 關閉、左右鍵切換作品、Tab 焦點鎖定
 document.addEventListener('keydown', (e) => {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxOpen = lightbox && lightbox.classList.contains('active');
+    const modal = document.getElementById('project-modal');
+    const modalOpen = modal && modal.classList.contains('active');
+
     if (e.key === 'Escape') {
-        closeLightbox();
+        if (lightboxOpen) {
+            closeLightbox();
+        } else if (modalOpen) {
+            closeModal();
+        }
+        return;
+    }
+
+    if (modalOpen && !lightboxOpen) {
+        if (e.key === 'ArrowLeft') {
+            navigateProject(-1);
+        } else if (e.key === 'ArrowRight') {
+            navigateProject(1);
+        } else if (e.key === 'Tab') {
+            trapFocus(modal, e);
+        }
     }
 });
 
@@ -400,3 +467,27 @@ function initDisplayControls() {
 }
 
 initDisplayControls();
+
+/* =========================================
+   5. 作品卡片鍵盤操作支援（可 Tab 聚焦、Enter / 空白鍵開啟）
+   ========================================= */
+function initCardKeyboard() {
+    document.querySelectorAll('.portfolio-grid .card').forEach((card) => {
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+
+        const heading = card.querySelector('h3');
+        if (heading && !card.hasAttribute('aria-label')) {
+            card.setAttribute('aria-label', `${heading.textContent.trim()} — 查看作品詳細`);
+        }
+
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+                e.preventDefault();
+                card.click();
+            }
+        });
+    });
+}
+
+initCardKeyboard();

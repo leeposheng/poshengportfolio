@@ -1,0 +1,25 @@
+# ===== 作業系統暫存檔 =====
+Thumbs.db
+ehthumbs.db
+desktop.ini
+.DS_Store
+
+# ===== 編輯器 =====
+.vscode/
+.idea/
+*.swp
+
+# ===== 圖片壓縮流程 =====
+# 原始圖片備份（不進版控，請自行另存於雲端/外接碟）
+jpg-originals-backup/
+# 壓縮腳本輸出資料夾
+jpg-compressed/
+jpg-*-backup/
+
+# ===== 影片素材（體積大，網站未直接使用，改用外部嵌入）=====
+*.mp4
+*.mov
+
+# ===== 工作素材資料夾（未在網站中引用）=====
+jpg/電腦店/圖庫/
+jpg/**/原圖/

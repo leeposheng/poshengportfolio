@@ -4,11 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Po-Sheng Lee | Portfolio</title>
-    
+
+    <meta name="description" content="李柏昇 (Lee Po-Sheng) 的作品集 — 工業設計研究生與獨立設計師，專注複雜曲面工藝、人因工程結構、展覽策劃與現代前端互動體驗。">
+    <meta name="author" content="Lee Po-Sheng">
+    <meta name="theme-color" content="#0a0a10">
+    <link rel="canonical" href="./">
+
+    <!-- Open Graph / 社群分享預覽（部署後請將 og:url、og:image 換成完整網址）-->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Po-Sheng Lee | Portfolio">
+    <meta property="og:description" content="工業設計研究生與獨立設計師，專注複雜曲面工藝、人因工程結構與現代前端互動體驗。">
+    <meta property="og:image" content="jpg/Lee_Po-Sheng%20Portfolio_page-0023.jpg">
+    <meta property="og:locale" content="zh_TW">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Po-Sheng Lee | Portfolio">
+    <meta name="twitter:description" content="工業設計研究生與獨立設計師，專注複雜曲面工藝、人因工程結構與現代前端互動體驗。">
+    <meta name="twitter:image" content="jpg/Lee_Po-Sheng%20Portfolio_page-0023.jpg">
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a10'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='16' font-weight='700' fill='%2300e5ff' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
-    <link rel="preload" as="style" href="style.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -154,19 +171,18 @@
                 <p>若對我的作品有興趣,歡迎透過以下方式與我聯繫。</p>
                 <div class="contact-links">
                     <a href="mailto:kevin89101251@gmail.com" class="contact-link">kevin89101251@gmail.com</a>
-                    <a href="Lee_Po-Sheng Portfolio.pdf" class="contact-link" download>Download Resume (PDF)</a>
+                    <a href="Lee_Po-Sheng%20Portfolio.pdf" class="contact-link" download>Download Resume (PDF)</a>
                 </div>
             </div>
         </section>
     </main>
 
-    <div id="project-modal" class="modal">
-        <button class="nav-arrow nav-arrow-prev" onclick="navigateProject(-1)" title="上一個作品">‹</button>
-        <button class="nav-arrow nav-arrow-next" onclick="navigateProject(1)" title="下一個作品">›</button>
+    <div id="project-modal" class="modal" role="dialog" aria-modal="true" aria-label="作品詳細內容" aria-hidden="true">
+        <button type="button" class="nav-arrow nav-arrow-prev" onclick="navigateProject(-1)" title="上一個作品" aria-label="上一個作品">‹</button>
+        <button type="button" class="nav-arrow nav-arrow-next" onclick="navigateProject(1)" title="下一個作品" aria-label="下一個作品">›</button>
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div class="modal-body" id="modal-body-content">
-                </div>
+            <button type="button" class="close-btn" onclick="closeModal()" aria-label="關閉">&times;</button>
+            <div class="modal-body" id="modal-body-content"></div>
         </div>
     </div>
 
