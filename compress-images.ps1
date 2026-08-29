@@ -9,7 +9,7 @@
 $API_KEY = "YOUR_API_KEY"  # 替換為你的 TinyPNG API Key
 $SOURCE_FOLDER = "c:\Users\kevin\OneDrive\桌面\作品集\jpg"
 $OUTPUT_FOLDER = "c:\Users\kevin\OneDrive\桌面\作品集\jpg-compressed"
-$API_URL = "https://api.tinify.com/output"
+$API_URL = "https://api.tinify.com/shrink"
 
 # 建立輸出資料夾
 if (!(Test-Path $OUTPUT_FOLDER)) {
@@ -65,7 +65,7 @@ foreach ($image in $images) {
         }
         
         # 上傳到 TinyPNG 並下載壓縮版本
-        $response = Invoke-WebRequest -Uri "https://api.tinify.com/compress" `
+        $response = Invoke-WebRequest -Uri $API_URL `
             -Method Post `
             -Headers $headers `
             -Body $imageBytes `
@@ -73,7 +73,7 @@ foreach ($image in $images) {
         
         if ($response.StatusCode -eq 200) {
             # 下載壓縮後的圖片
-            $outputResponse = Invoke-WebRequest -Uri $response.Headers["Location"] `
+            Invoke-WebRequest -Uri $response.Headers["Location"] `
                 -Method Get `
                 -Headers @{"Authorization" = "Basic $auth"} `
                 -OutFile $outputPath `
